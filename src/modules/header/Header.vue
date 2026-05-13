@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { InputSearch } from "@arco-design/web-vue";
+import { InputSearch } from "ant-design-vue";
 import { computed, reactive, onBeforeUnmount, onMounted } from "vue";
 import Theme from "@/modules/theme/Theme.vue";
 
@@ -45,15 +45,13 @@ onBeforeUnmount(() => {
         <div class="menu">
           <InputSearch
             class="search-input"
-            v-model="searchData.content"
+            v-model:value="searchData.content"
             v-if="showSearch"
             placeholder="输入关键词"
-            button-text="搜索"
-            search-button
+            enter-button="搜索"
             @search="searchClick"
             :loading="searchData.loading"
             allow-clear
-            @press-enter="searchClick"
           />
         </div>
         <Theme class="theme"></Theme>
@@ -69,24 +67,27 @@ onBeforeUnmount(() => {
   left: 0;
   right: 0;
   z-index: 999;
-  border-bottom: 1px solid var(--color-border);
-  background-color: var(--color-bg-2);
+  border-bottom: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .nav-bar_content {
   position: relative;
   display: flex;
   width: 100%;
-  height: 60px;
-  min-height: 60px;
-  max-height: 60px;
+  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
   box-sizing: border-box;
   z-index: 999;
+  padding: 0 24px;
 }
 
 .nav-bar_left {
-  width: 180px;
-  font-size: 30px;
+  width: 190px;
+  font-size: 26px;
+  line-height: 1;
 }
 
 .nav-bar_right {
@@ -94,14 +95,25 @@ onBeforeUnmount(() => {
   display: flex;
   flex: 1;
   align-items: center;
-  padding-right: 1rem;
+  gap: 16px;
 
   .menu {
     flex: 1;
     .search-input {
-      width: 320px;
+      width: 360px;
+      max-width: 100%;
     }
   }
 }
-</style>
 
+@media (max-width: 768px) {
+  .nav-bar_content {
+    padding: 0 12px;
+  }
+
+  .nav-bar_left {
+    width: 150px;
+    font-size: 22px;
+  }
+}
+</style>

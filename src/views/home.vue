@@ -37,9 +37,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-col overflow-hidden gap-8px">
+  <div class="home-page">
     <ChartTypeGroup @change="tabChange"></ChartTypeGroup>
-    <div class="flex-1 overflow-hidden">
+    <div class="home-list">
       <ChartList />
     </div>
   </div>
@@ -47,7 +47,28 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .content {
-  padding: 20px 30px;
+  padding: 16px 24px 20px;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.home-list {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 12px;
+  }
 }
 </style>
-

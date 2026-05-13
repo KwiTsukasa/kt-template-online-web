@@ -1,5 +1,5 @@
 <template>
-  <a href="/" class="logo"> ShyTemplate </a>
+  <a href="/" class="logo"> KT-Template </a>
 </template>
 
 <style lang="scss">
