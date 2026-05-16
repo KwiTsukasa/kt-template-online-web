@@ -46,6 +46,7 @@ src
 NODE_ENV=development
 VITE_APP_PLAY_GROUND=http://localhost:48090
 VITE_APP_PROXY=http://localhost:48085/
+VITE_APP_ADMIN_LOGIN=http://localhost:5999/auth/login
 VITE_APP_BASE_API=/api
 VITE_APP_OSS_DOMAIN=/chart-assets
 ```
@@ -56,6 +57,7 @@ VITE_APP_OSS_DOMAIN=/chart-assets
 | --- | --- |
 | `VITE_APP_PLAY_GROUND` | Playground 地址，用于新增、编辑和分享链接 |
 | `VITE_APP_PROXY` | 后端服务地址，Vite dev server 会把 `/api` 代理到这里 |
+| `VITE_APP_ADMIN_LOGIN` | 后台登录页地址，组件接口 `401` 时会带 `redirect` 跳转到这里 |
 | `VITE_APP_BASE_API` | API 前缀，当前代码使用 `/api` |
 | `VITE_APP_OSS_DOMAIN` | 静态资源域名预留配置 |
 
@@ -82,6 +84,7 @@ pnpm deploy    # 构建并执行部署脚本
 接口集中在 `src/api`：
 
 - `request.ts`：axios 实例，`baseURL` 来自 `src/config.ts`。
+- `auth.ts`：复用后台登录态，持久化 `accessToken`、用户信息和权限码，支持通过刷新 token cookie 自动续期。
 - `component.ts`：组件列表、详情、删除。
 - `dict.ts`：一级/二级字典查询。
 
@@ -94,6 +97,8 @@ pnpm deploy    # 构建并执行部署脚本
 | `POST` | `/component/remove` | 逻辑删除组件 |
 | `GET` | `/dict/getDictByKey` | 查询一级字典 |
 | `GET` | `/dict/getComponentDictByType` | 根据一级类型查询二级类型 |
+
+组件接口需要后台登录态。请求层会先读取本地持久化的 accessToken；没有 token 时会通过 `/auth/refresh` 使用 cookie 刷新并持久化登录数据；接口返回 `401` 时会跳到 `VITE_APP_ADMIN_LOGIN`，登录成功后回到原页面。
 
 ## Playground 跳转
 
