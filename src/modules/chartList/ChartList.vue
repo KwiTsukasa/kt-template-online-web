@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { Button, Card, Descriptions, DescriptionsItem, Empty, message, Pagination, Popconfirm, Spin, Tooltip } from "ant-design-vue";
+import {
+  Button,
+  Card,
+  Descriptions,
+  DescriptionsItem,
+  Empty,
+  Image as AImage,
+  message,
+  Pagination,
+  Popconfirm,
+  Spin,
+  Tooltip,
+} from "ant-design-vue";
 import { DeleteOutlined, ShareAltOutlined } from "@ant-design/icons-vue";
 import { onBeforeUnmount, onMounted, reactive } from "vue";
 import dayjs from "dayjs";
@@ -196,8 +208,17 @@ const handleRemove = async (id: string) => {
             </div>
           </template>
           <template #cover>
-            <div class="chart-cover" @click="chartClick(item.id)">
-              <img :src="item.image" class="chart-image" v-if="item.image" />
+            <div
+              class="chart-cover"
+              :class="{ 'is-empty': !item.image }"
+              @click="!item.image && chartClick(item.id)"
+            >
+              <AImage
+                v-if="item.image"
+                :src="item.image"
+                class="chart-image"
+                :preview="true"
+              />
               <Empty v-else class="chart-empty" description="暂无图片" />
             </div>
           </template>
@@ -322,15 +343,39 @@ const handleRemove = async (id: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 160px;
+  height: 180px;
+  padding: 10px;
+  box-sizing: border-box;
   border-bottom: 1px solid var(--app-border);
   background: var(--app-cover-bg);
+  cursor: default;
+}
+
+.chart-cover.is-empty {
+  cursor: pointer;
 }
 
 .chart-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+}
+
+:deep(.chart-cover .ant-image) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+:deep(.chart-cover .ant-image-img) {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+:deep(.chart-cover .ant-image-mask) {
+  border-radius: 6px;
 }
 
 .chart-empty {
