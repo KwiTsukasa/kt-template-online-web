@@ -9,7 +9,7 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [vue(), UnoCSS()],
     server: {
-      port: 48088,
+      port: 48089,
       proxy: {
         "/api": {
           target: VITE_APP_PROXY,
@@ -25,4 +25,3 @@ export default ({ mode }) => {
     },
   });
 };
-

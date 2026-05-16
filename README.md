@@ -44,7 +44,7 @@ src
 
 ```env
 NODE_ENV=development
-VITE_APP_PLAY_GROUND=http://localhost:5173
+VITE_APP_PLAY_GROUND=http://localhost:48090
 VITE_APP_PROXY=http://localhost:48085/
 VITE_APP_BASE_API=/api
 VITE_APP_OSS_DOMAIN=/chart-assets
@@ -66,7 +66,7 @@ pnpm install
 pnpm dev
 ```
 
-开发服务默认端口为 `48088`。
+开发服务默认端口为 `48089`。
 
 常用命令：
 
@@ -106,7 +106,7 @@ pnpm deploy    # 构建并执行部署脚本
 示例：
 
 ```text
-http://localhost:5173/?id=xxx&name=基础折线图&type=1&componentType=1#...
+http://localhost:48090/?id=xxx&name=基础折线图&type=1&componentType=1#...
 ```
 
 ## 开发约定
