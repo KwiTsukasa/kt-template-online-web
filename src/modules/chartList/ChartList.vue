@@ -213,12 +213,9 @@ const handleRemove = async (id: string) => {
               :class="{ 'is-empty': !item.image }"
               @click="!item.image && chartClick(item.id)"
             >
-              <AImage
-                v-if="item.image"
-                :src="item.image"
-                class="chart-image"
-                :preview="true"
-              />
+              <div v-if="item.image" class="chart-preview-trigger" @click.stop>
+                <AImage :src="item.image" class="chart-image" :preview="true" />
+              </div>
               <Empty v-else class="chart-empty" description="暂无图片" />
             </div>
           </template>
@@ -356,6 +353,11 @@ const handleRemove = async (id: string) => {
 }
 
 .chart-image {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-preview-trigger {
   width: 100%;
   height: 100%;
 }
