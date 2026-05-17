@@ -3,6 +3,7 @@ import config from "@/config";
 import {
   clearAdminLoginRedirectMark,
   clearPersistedAuth,
+  consumeAdminAuthRedirect,
   getStoredAccessToken,
   redirectToAdminLogin,
   refreshPersistedAuth,
@@ -83,7 +84,7 @@ const redirectAfterAuthExpired = () => {
 };
 
 request.interceptors.request.use(async (requestConfig) => {
-  const accessToken = getStoredAccessToken();
+  const accessToken = consumeAdminAuthRedirect() || getStoredAccessToken();
 
   if (accessToken) {
     requestConfig.headers.Authorization = `Bearer ${accessToken}`;
