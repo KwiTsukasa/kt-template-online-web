@@ -80,11 +80,7 @@ const redirectAfterAuthExpired = () => {
 };
 
 request.interceptors.request.use(async (requestConfig) => {
-  let accessToken = getStoredAccessToken();
-
-  if (!accessToken) {
-    accessToken = await refreshPersistedAuth();
-  }
+  const accessToken = getStoredAccessToken();
 
   if (accessToken) {
     requestConfig.headers.Authorization = `Bearer ${accessToken}`;
