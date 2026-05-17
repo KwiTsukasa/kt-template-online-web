@@ -18,6 +18,7 @@ const ACCESS_CODES_KEY = "kt-admin-access-codes";
 const USER_INFO_KEY = "kt-admin-user-info";
 
 let refreshPromise: Promise<string | null> | null = null;
+let redirectingToAdminLogin = false;
 
 const authClient = axios.create({
   baseURL: config.axiosBase,
@@ -66,6 +67,9 @@ const buildAdminLoginUrl = (redirect: string) => {
 };
 
 export const redirectToAdminLogin = () => {
+  if (redirectingToAdminLogin) return;
+
+  redirectingToAdminLogin = true;
   window.location.href = buildAdminLoginUrl(window.location.href);
 };
 
