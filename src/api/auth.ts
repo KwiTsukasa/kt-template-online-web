@@ -49,10 +49,24 @@ export const persistAuthData = ({
   }
 };
 
-export const redirectToAdminLogin = () => {
+const buildAdminLoginUrl = (redirect: string) => {
   const loginUrl = new URL(config.adminLogin);
-  loginUrl.searchParams.set("redirect", encodeURIComponent(window.location.href));
-  window.location.href = loginUrl.toString();
+
+  if (loginUrl.hash) {
+    const [hashPath, hashSearch = ""] = loginUrl.hash.slice(1).split("?");
+    const hashParams = new URLSearchParams(hashSearch);
+    hashParams.set("redirect", redirect);
+    // Admin 生产环境使用 hash 路由，redirect 必须放在 hash 内部才能被 Vue Router 读取。
+    loginUrl.hash = `${hashPath}?${hashParams.toString()}`;
+    return loginUrl.toString();
+  }
+
+  loginUrl.searchParams.set("redirect", redirect);
+  return loginUrl.toString();
+};
+
+export const redirectToAdminLogin = () => {
+  window.location.href = buildAdminLoginUrl(window.location.href);
 };
 
 export const refreshPersistedAuth = async () => {
