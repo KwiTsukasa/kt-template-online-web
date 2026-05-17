@@ -16,6 +16,8 @@ type PersistedAuth = {
 const ACCESS_TOKEN_KEY = "kt-admin-access-token";
 const ACCESS_CODES_KEY = "kt-admin-access-codes";
 const USER_INFO_KEY = "kt-admin-user-info";
+const LOGIN_REDIRECT_MARK_KEY = "kt-admin-login-redirect-at";
+const LOGIN_REDIRECT_COOLDOWN = 10 * 1000;
 
 let refreshPromise: Promise<string | null> | null = null;
 let redirectingToAdminLogin = false;
@@ -34,6 +36,16 @@ export const clearPersistedAuth = () => {
   window.localStorage.removeItem(ACCESS_TOKEN_KEY);
   window.localStorage.removeItem(ACCESS_CODES_KEY);
   window.localStorage.removeItem(USER_INFO_KEY);
+};
+
+export const clearAdminLoginRedirectMark = () => {
+  window.sessionStorage.removeItem(LOGIN_REDIRECT_MARK_KEY);
+};
+
+export const shouldSkipRepeatedAdminLoginRedirect = () => {
+  const redirectAt = Number(window.sessionStorage.getItem(LOGIN_REDIRECT_MARK_KEY));
+
+  return Number.isFinite(redirectAt) && Date.now() - redirectAt < LOGIN_REDIRECT_COOLDOWN;
 };
 
 export const persistAuthData = ({
@@ -70,6 +82,7 @@ export const redirectToAdminLogin = () => {
   if (redirectingToAdminLogin) return;
 
   redirectingToAdminLogin = true;
+  window.sessionStorage.setItem(LOGIN_REDIRECT_MARK_KEY, String(Date.now()));
   window.location.href = buildAdminLoginUrl(window.location.href);
 };
 
