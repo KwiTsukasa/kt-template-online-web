@@ -13,6 +13,7 @@ import {
 export interface ApiResponse<T = any> {
   code: number;
   data: T;
+  err?: unknown;
   message?: string;
   msg: string;
 }
@@ -114,6 +115,18 @@ request.interceptors.response.use(
       if (retryResponse) return retryResponse;
 
       redirectAfterAuthExpired();
+    }
+
+    if (axios.isAxiosError<ApiResponse>(error)) {
+      return Promise.reject(
+        new Error(
+          error.response?.data?.msg ||
+            (typeof error.response?.data?.err === "string" ? error.response.data.err : "") ||
+            error.response?.data?.message ||
+            error.message ||
+            "请求失败",
+        ),
+      );
     }
 
     return Promise.reject(error);
