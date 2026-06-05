@@ -11,6 +11,7 @@
     "deploy": "pnpm build && npx shy ftp deploy -f ./deploy",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "typecheck": "vue-tsc --noEmit",
+    "verify:staged": "node scripts/husky-fast-check.mjs",
     "verify:commit": "pnpm run lint && pnpm run typecheck"
   },
   "dependencies": {
