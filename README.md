@@ -134,3 +134,7 @@ pnpm exec vue-tsc --noEmit
 ```bash
 pnpm dev
 ```
+
+## 来源与许可证
+
+当前项目未使用需要单独列出的上游源码、模板或资产。
