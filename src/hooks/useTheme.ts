@@ -14,7 +14,12 @@ const applyDocumentTheme = (value: ThemeType) => {
 };
 
 export const themeConfig = computed(() => ({
-  algorithm: theme.value === "dark" ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
+  algorithm: (() => {
+    if (theme.value === "dark") {
+      return antTheme.darkAlgorithm;
+    }
+    return antTheme.defaultAlgorithm;
+  })(),
 }));
 
 export const setTheme = (value: ThemeType) => {

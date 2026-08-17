@@ -4,9 +4,9 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import ChartTypeGroup from "@/modules/chartList/components/ChartTypeGroup.vue";
+import ChartTypeGroup from "@/modules/chart-list/components/ChartTypeGroup.vue";
 import Bus from "@/bus";
-import ChartList from "@/modules/chartList/ChartList.vue";
+import ChartList from "@/modules/chart-list/ChartList.vue";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { unref } from "vue";
 

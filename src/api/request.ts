@@ -121,7 +121,12 @@ request.interceptors.response.use(
       return Promise.reject(
         new Error(
           error.response?.data?.msg ||
-            (typeof error.response?.data?.err === "string" ? error.response.data.err : "") ||
+            ((() => {
+              if (typeof error.response?.data?.err === "string") {
+                return error.response.data.err;
+              }
+              return "";
+            })()) ||
             error.response?.data?.message ||
             error.message ||
             "请求失败",

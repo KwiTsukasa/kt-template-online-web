@@ -28,7 +28,8 @@ src
   api/                 # axios 封装和业务接口
   components/logo/     # Logo
   hooks/               # 主题、模型等组合逻辑
-  modules/chartList/   # 组件列表和分类筛选
+  models/chart-list/   # 图表列表状态模型
+  modules/chart-list/  # 组件列表和分类筛选
   modules/header/      # 顶部栏、搜索、主题切换
   modules/theme/       # 主题组件
   utils/               # 环境检测、转换工具

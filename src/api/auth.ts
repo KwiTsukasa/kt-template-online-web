@@ -154,14 +154,20 @@ export const refreshPersistedAuth = async () => {
 
       persistAuthData({
         accessCodes:
-          accessCodesResult.status === "fulfilled"
-            ? accessCodesResult.value.data.data
-            : undefined,
+          (() => {
+            if (accessCodesResult.status === "fulfilled") {
+              return accessCodesResult.value.data.data;
+            }
+            return undefined;
+          })(),
         accessToken,
         userInfo:
-          userInfoResult.status === "fulfilled"
-            ? userInfoResult.value.data.data
-            : undefined,
+          (() => {
+            if (userInfoResult.status === "fulfilled") {
+              return userInfoResult.value.data.data;
+            }
+            return undefined;
+          })(),
       });
 
       return accessToken;
